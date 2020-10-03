@@ -7,31 +7,31 @@ import (
 )
 
 func TestString_UnmarshalJSON(t *testing.T) {
-	string := new(String)
-	err := string.UnmarshalJSON([]byte(`"hello world"`))
+	value := new(String)
+	err := value.UnmarshalJSON([]byte(`"hello world"`))
 	assert.NoError(t, err)
-	assert.EqualValues(t, `hello world`, string.String)
+	assert.EqualValues(t, `hello world`, value.String)
 
-	string = new(String)
-	err = string.UnmarshalJSON([]byte(`""`))
+	value = new(String)
+	err = value.UnmarshalJSON([]byte(`""`))
 	assert.NoError(t, err)
-	assert.EqualValues(t, ``, string.String)
+	assert.EqualValues(t, ``, value.String)
 
-	string = new(String)
-	err = string.UnmarshalJSON([]byte(``))
+	value = new(String)
+	err = value.UnmarshalJSON([]byte(``))
 	assert.Errorf(t, err, `unexpected end of JSON input`)
 }
 
 func TestString_MarshalJSON(t *testing.T) {
-	string := String{
+	value := String{
 		NullString: sql.NullString{String: `%Hello World%`, Valid: true},
 	}
-	raw, err := string.MarshalJSON()
+	raw, err := value.MarshalJSON()
 	assert.NoError(t, err)
 	assert.EqualValues(t, `"%Hello World%"`, raw)
 
-	string.String = `Hello World`
-	raw, err = string.MarshalJSON()
+	value.String = `Hello World`
+	raw, err = value.MarshalJSON()
 	assert.NoError(t, err)
 	assert.EqualValues(t, `"Hello World"`, raw)
 }

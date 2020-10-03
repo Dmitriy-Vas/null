@@ -7,36 +7,36 @@ import (
 )
 
 func TestBool_UnmarshalJSON(t *testing.T) {
-	bool := new(Bool)
-	err := bool.UnmarshalJSON([]byte(`false`))
+	value := new(Bool)
+	err := value.UnmarshalJSON([]byte(`false`))
 	assert.NoError(t, err)
-	assert.EqualValues(t, false, bool.Bool)
+	assert.EqualValues(t, false, value.Bool)
 
-	bool = new(Bool)
-	err = bool.UnmarshalJSON([]byte(`true`))
+	value = new(Bool)
+	err = value.UnmarshalJSON([]byte(`true`))
 	assert.NoError(t, err)
-	assert.EqualValues(t, true, bool.Bool)
+	assert.EqualValues(t, true, value.Bool)
 
-	bool = new(Bool)
-	err = bool.UnmarshalJSON([]byte(``))
+	value = new(Bool)
+	err = value.UnmarshalJSON([]byte(``))
 	assert.Errorf(t, err, `unexpected end of JSON input`)
 }
 
 func TestBool_MarshalJSON(t *testing.T) {
-	bool := Bool{
+	value := Bool{
 		NullBool: sql.NullBool{Bool: true, Valid: true},
 	}
-	raw, err := bool.MarshalJSON()
+	raw, err := value.MarshalJSON()
 	assert.NoError(t, err)
 	assert.EqualValues(t, `true`, raw)
 
-	bool.Bool = false
-	raw, err = bool.MarshalJSON()
+	value.Bool = false
+	raw, err = value.MarshalJSON()
 	assert.NoError(t, err)
 	assert.EqualValues(t, `false`, raw)
 
-	bool.Valid = false
-	raw, err = bool.MarshalJSON()
+	value.Valid = false
+	raw, err = value.MarshalJSON()
 	assert.NoError(t, err)
 	assert.EqualValues(t, `false`, raw)
 }

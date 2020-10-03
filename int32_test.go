@@ -7,26 +7,26 @@ import (
 )
 
 func TestInt32_UnmarshalJSON(t *testing.T) {
-	int := new(Int32)
-	err := int.UnmarshalJSON([]byte(`100`))
+	value := new(Int32)
+	err := value.UnmarshalJSON([]byte(`100`))
 	assert.NoError(t, err)
-	assert.EqualValues(t, 100, int.Int32)
+	assert.EqualValues(t, 100, value.Int32)
 
-	int = new(Int32)
-	err = int.UnmarshalJSON([]byte(``))
+	value = new(Int32)
+	err = value.UnmarshalJSON([]byte(``))
 	assert.Errorf(t, err, `unexpected end of JSON input`)
 }
 
 func TestInt32_MarshalJSON(t *testing.T) {
-	int := Int32{
+	value := Int32{
 		NullInt32: sql.NullInt32{Int32: 0, Valid: true},
 	}
-	raw, err := int.MarshalJSON()
+	raw, err := value.MarshalJSON()
 	assert.NoError(t, err)
 	assert.EqualValues(t, `0`, raw)
 
-	int.Int32 = 100
-	raw, err = int.MarshalJSON()
+	value.Int32 = 100
+	raw, err = value.MarshalJSON()
 	assert.NoError(t, err)
 	assert.EqualValues(t, `100`, raw)
 }
