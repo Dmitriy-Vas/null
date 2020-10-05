@@ -1,4 +1,4 @@
-module null
+module github.com/Dmitriy-Vas/null
 
 go 1.15
 
